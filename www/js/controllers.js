@@ -12,4 +12,9 @@ angular.module('starter.controllers', [])
 		console.log('trige departure');
 		CommonService.getDeparture();
 	};
+	
+	this.getArrived = function(){
+		console.log('trige arrived');
+		CommonService.getArrived();
+	};
 })
