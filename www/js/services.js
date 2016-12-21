@@ -1,50 +1,95 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('CommonService', function($http) {
+	var variables = {
+		dict : {},
+		URLs : {
+			health : 'http://' + window.variables.server + '/core-main/health',
+			dict : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/sysNormalMor',
+			login : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/syswindowlogin',
+			departure : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetboardstation'
+		}
+	}, service = {
+		init : function() {
+			console.log('<Init>');
+			this._loadData();
+		},
+		checkHealth : function() {
+			console.log('<CheckHealth>');
+			$http.get(variables.URLs.health).then(function(response) {
+				console.log(response.data.message);
+			}, function(response) {
+				console.error(response);
+			});
+		},
+		_loadData : function() {
+			console.log('<LoadStation>');
+			$http.post(variables.URLs.dict, window.variables.postInfo).then(function(response) {
+				if (response.data) {
+					variables.dict = response.data;
+				}
+			}, function(response) {
+				console.error(response);
+			});
+		},
+		login : function() {
+			console.log('<Login>');
+			var data = angular.copy(window.variables.postInfo);
+			data.operatorNo = 'sbts01';
+			data.operatorPwd = 'admin';
+			data.ipAddress = "*";
+			data.hdNo = "S4Y3B3KS";
+			data.windowTimestamp = new Date().getTime();
+			$http.post(variables.URLs.login, data).then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.error(response);
+			});
+		},
+		// 通过发车日期、车次号获得乘坐站
+		getDeparture : function() {
+			var data = {
+				"sessionId" : null,
+				"serviceName" : null,
+				"channelCode" : null,
+				"ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"operatorNo" : "sbts01",
+				"shiftCode" : null,
+				"innerCode" : "SBT01",
+				"belongStationCode" : null,
+				"money" : null,
+				"runMode" : null,
+				"ipAddress" : "*",
+				"systemCode" : null,
+				"deviceIdentity" : null,
+				"licenceCode" : null,
+				"applyCode" : null,
+				"agentRepeater" : null,
+				"encryptFlag" : false,
+				"travelDate" : 1482163200000,
+				"stationTrainCode" : "G1214"
+			}
+			$http.post(variables.URLs.departure, data).then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.error(response);
+			});
+		}
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+	};
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
+	service.checkHealth();
+	service.init();
+	console.log('CommonService.variables', variables);
+
+	return {
+		login : function() {
+			service.login();
+		},
+		getDeparture : function() {
+			service.getDeparture();
+		}
+	};
 });
