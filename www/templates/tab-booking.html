@@ -38,8 +38,15 @@
 		</label>
 		<label class="item item-input">
 			<span class="input-label">TICKET TYPE</span>
-			<ion-checkbox data-ng-repeat="type in ticketTypes track by type.ticketTypeCode">{{type.ticketTypeNameEn}}</ion-checkbox>
+			<ion-checkbox style="padding:0 10px 0 50px; border: 0;" data-ng-repeat="type in ticketTypes track by type.ticketTypeCode" data-ng-model="selectedTicketTypes[$index]">{{type.ticketTypeNameEn}}</ion-checkbox>
 		</label>
+		<label class="item item-input">
+			<span class="input-label">SEAT TYPE</span>
+			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
+		</label>
+		<li class="item">
+			<button data-ng-click="bookingController.query()">Query</button>
+		</li>
 	</ul>
   	
 </ion-content>

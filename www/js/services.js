@@ -214,6 +214,9 @@ angular.module('starter.services', [])
 		},
 		getTicketTypes : function() {
 			return variables.dict.ticketTypeList;
+		},
+		getSeatTypes : function() {
+			return variables.dict.seatTypeList;
 		}
 	};
 });

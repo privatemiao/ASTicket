@@ -3,6 +3,8 @@ angular.module('starter.controllers', [])
 .controller('BookingController', function($scope, $ionicModal, CommonService, ionicDatePicker) {
 	var reference = this, MODAL_TITLE_DEPARTURE = 'Departure Station', MODAL_TITLE_ARRIVED = 'Arrived Station';
 	$scope.departureDate = new Date();
+	$scope.selectedTicketTypes = [];
+	$scope.selectedSeatTypes = [];
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
 		scope : $scope,
@@ -25,13 +27,14 @@ angular.module('starter.controllers', [])
 				console.log('You choise\'s ', val);
 				$scope.departureDate = new Date(val);
 			},
-			inputDate: $scope.departureDate
+			inputDate : $scope.departureDate
 		});
 	};
 
 	CommonService.loadData(function() {
 		$scope.stations = CommonService.getStations();
 		$scope.ticketTypes = CommonService.getTicketTypes();
+		$scope.seatTypes = CommonService.getSeatTypes();
 		$scope.departureStation = $scope.stations[0];
 		$scope.arrivedStation = $scope.stations[$scope.stations.length - 1];
 		$scope.loadingModal.hide();
@@ -65,6 +68,39 @@ angular.module('starter.controllers', [])
 		default:
 			break;
 		}
+	};
+
+	this.query = function() {
+		var data = {
+			departureStation : $scope.departureStation,
+			arrivedStation : $scope.arrivedStation,
+			departureDate : $scope.departureDate,
+			ticketTypes : [],
+			seatTypes : []
+		};
+
+		if ($scope.selectedTicketTypes.length !== 0) {
+			for (var i = 0; i < $scope.selectedTicketTypes.length; i++) {
+				if ($scope.selectedTicketTypes[i]) {
+					data.ticketTypes.push($scope.ticketTypes[i]);
+				}
+			}
+		}
+		if ($scope.selectedSeatTypes.length !== 0) {
+			for (var i = 0; i < $scope.selectedSeatTypes.length; i++) {
+				if ($scope.selectedSeatTypes[i]) {
+					data.seatTypes.push($scope.seatTypes[i]);
+				}
+			}
+		}
+
+		console.log($scope.selectedTicketTypes.length);
+		console.log($scope.ticketTypes);
+		console.log(data);
+	};
+
+	this.checkTicketType = function(type) {
+		console.log(type);
 	};
 
 	$scope.openModal = function() {
