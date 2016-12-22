@@ -46,7 +46,7 @@ angular.module('starter.services', [])
 			$http.post(variables.URLs.dict, data).then(function(response) {
 				if (response.data) {
 					variables.dict = response.data;
-					if (callback){
+					if (callback) {
 						callback();
 					}
 				}
@@ -211,6 +211,9 @@ angular.module('starter.services', [])
 		},
 		getStations : function() {
 			return variables.dict.stationList;
+		},
+		getTicketTypes : function() {
+			return variables.dict.ticketTypeList;
 		}
 	};
 });

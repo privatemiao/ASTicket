@@ -36,6 +36,10 @@
 			<span class="input-label">DATE</span>
 			<button class="button button-clear button-positive" data-ng-click="bookingController.openDepartureDatePicker()">{{departureDate | date:'yyyy-MM-dd'}}</button>
 		</label>
+		<label class="item item-input">
+			<span class="input-label">TICKET TYPE</span>
+			<ion-checkbox data-ng-repeat="type in ticketTypes track by type.ticketTypeCode">{{type.ticketTypeNameEn}}</ion-checkbox>
+		</label>
 	</ul>
   	
 </ion-content>

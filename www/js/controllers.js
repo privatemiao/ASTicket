@@ -31,6 +31,7 @@ angular.module('starter.controllers', [])
 
 	CommonService.loadData(function() {
 		$scope.stations = CommonService.getStations();
+		$scope.ticketTypes = CommonService.getTicketTypes();
 		$scope.departureStation = $scope.stations[0];
 		$scope.arrivedStation = $scope.stations[$scope.stations.length - 1];
 		$scope.loadingModal.hide();
