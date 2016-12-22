@@ -1,5 +1,42 @@
 <ion-view view-title="Booking">
-  <ion-content>
-  	<h2>Booking</h2>
-  </ion-content>
+<ion-content>
+  	
+<script id="modal-stations.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">{{modalStationTitle}}</h1>
+    </ion-header-bar>
+    <ion-content>
+    	<ul class="list">
+			<a class="item" data-ng-repeat="station in stations track by $index" data-ng-click="bookingController.selectStation(station);">{{station.stationNameEn}}</a>
+		</ul>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+<script id="modal-loading.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Loading</h1>
+    </ion-header-bar>
+    <ion-content>
+		Loading...
+		<button data-ng-click="loadingModal.hide()">x</button>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+	<ul class="list">
+		<li class="item" style="text-align: center;">
+			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Departure Station')">{{departureStation.stationNameEn}}</button>
+			<button class="button button-clear button-positive" style="color:#000;" data-ng-click="bookingController.exchangeStation()"><i class="ion-arrow-swap"></i></button>
+			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Arrived Station')">{{arrivedStation.stationNameEn}}</button>
+		</li>
+		<label class="item item-input">
+			<span class="input-label">DATE</span>
+			<input type="datetime">
+		</label>
+	</ul>
+  	
+</ion-content>
 </ion-view>

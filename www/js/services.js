@@ -8,13 +8,10 @@ angular.module('starter.services', [])
 			dict : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/sysNormalMor',
 			login : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/syswindowlogin',
 			getDeparture : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetboardstation',
-			getArrived : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetarivstation'
+			getArrived : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetarivstation',
+			queryTrain : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysfdzquery'
 		}
 	}, service = {
-		init : function() {
-			console.log('<Init>');
-			this._loadData();
-		},
 		checkHealth : function() {
 			console.log('<CheckHealth>');
 			$http.get(variables.URLs.health).then(function(response) {
@@ -23,7 +20,7 @@ angular.module('starter.services', [])
 				console.error(response);
 			});
 		},
-		_loadData : function() {
+		loadData : function(callback) {
 			console.log('<LoadStation>');
 			var data = {
 				"sessionId" : null,
@@ -49,6 +46,9 @@ angular.module('starter.services', [])
 			$http.post(variables.URLs.dict, data).then(function(response) {
 				if (response.data) {
 					variables.dict = response.data;
+					if (callback){
+						callback();
+					}
 				}
 			}, function(response) {
 				console.error(response);
@@ -152,15 +152,51 @@ angular.module('starter.services', [])
 				console.error(response);
 			});
 
+		},
+		queryTrain : function() {
+			var data = {
+				"sessionId" : null,
+				"serviceName" : null,
+				"channelCode" : null,
+				"ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"operatorNo" : null,
+				"shiftCode" : null,
+				"innerCode" : "SBT01",
+				"belongStationCode" : null,
+				"money" : null,
+				"runMode" : null,
+				"ipAddress" : null,
+				"systemCode" : null,
+				"deviceIdentity" : null,
+				"licenceCode" : null,
+				"applyCode" : null,
+				"agentRepeater" : null,
+				"encryptFlag" : false,
+				"travelDate" : 1482249600000,
+				"boardStationCode" : "SBT",
+				"arrivalStationCode" : "BKE",
+				"purposeCode" : "A1"
+			};
+
+			$http.post(variables.URLs.queryTrain, data).then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.error(response);
+			});
+
 		}
 
 	};
 
 	service.checkHealth();
-	service.init();
 	console.log('CommonService.variables', variables);
 
 	return {
+		loadData : function(callback) {
+			service.loadData(callback);
+		},
 		login : function() {
 			service.login();
 		},
@@ -169,6 +205,12 @@ angular.module('starter.services', [])
 		},
 		getArrived : function() {
 			service.getArrived();
+		},
+		queryTrain : function() {
+			service.queryTrain();
+		},
+		getStations : function() {
+			return variables.dict.stationList;
 		}
 	};
 });

@@ -88,6 +88,6 @@ angular.module('starter', [ 'ionic', 'starter.controllers', 'starter.services' ]
 		}
 	});
 
-	$urlRouterProvider.otherwise('/tab/booking');
+	$urlRouterProvider.otherwise('/tab/inquire');
 
 });
