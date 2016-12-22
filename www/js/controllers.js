@@ -1,7 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('BookingController', function($scope, $ionicModal, CommonService) {
+.controller('BookingController', function($scope, $ionicModal, CommonService, ionicDatePicker) {
 	var reference = this, MODAL_TITLE_DEPARTURE = 'Departure Station', MODAL_TITLE_ARRIVED = 'Arrived Station';
+	$scope.departureDate = new Date();
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
 		scope : $scope,
@@ -17,6 +18,16 @@ angular.module('starter.controllers', [])
 	}).then(function(modal) {
 		$scope.modal = modal;
 	});
+
+	this.openDepartureDatePicker = function() {
+		ionicDatePicker.openDatePicker({
+			callback : function(val) {
+				console.log('You choise\'s ', val);
+				$scope.departureDate = new Date(val);
+			},
+			inputDate: $scope.departureDate
+		});
+	};
 
 	CommonService.loadData(function() {
 		$scope.stations = CommonService.getStations();
