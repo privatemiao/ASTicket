@@ -5,6 +5,10 @@ angular.module('starter.controllers', [])
 	$scope.departureDate = new Date();
 	$scope.selectedTicketTypes = [];
 	$scope.selectedSeatTypes = [];
+	/*
+	 * 根据条件检索出来的结果 \ 检索条件为 乘坐日期、乘坐站、到达站 \ 其它条件在检索出来后，通过样式控制是否可见
+	 */
+	$scope.trainList = [];
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
 		scope : $scope,
@@ -94,9 +98,37 @@ angular.module('starter.controllers', [])
 			}
 		}
 
-		console.log($scope.selectedTicketTypes.length);
-		console.log($scope.ticketTypes);
-		console.log(data);
+		CommonService.queryTrain({
+			data : {
+				"ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"innerCode" : "SBT01",
+				"travelDate" : data.departureDate.getTime(),
+				"boardStationCode" : data.departureStation.stationCode,
+				"arrivalStationCode" : data.arrivedStation.stationCode,
+				"purposeCode" : "A1"
+			},
+			callback : function(response) {
+				console.log('Query train ', response);
+				var trainList = [];
+				if (response && response.data && response.data.success) {
+					trainList = response.data.trainInfo;
+				}
+				
+				for (var i = trainList.length - 1; i >= 0; i --){
+					if (trainList[i].seatInfo.length == 0){
+						trainList.pop();
+						continue;
+					}
+					
+					//TODO translate seattype
+				}
+				
+				
+				$scope.trainList = trainList;
+			}
+		});
 	};
 
 	this.checkTicketType = function(type) {

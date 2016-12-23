@@ -1,3 +1,8 @@
+<style>
+	.tran-code{
+		font-size: 1.5em;
+	}
+</style>
 <ion-view view-title="Booking">
 <ion-content>
   	
@@ -38,16 +43,24 @@
 		</label>
 		<label class="item item-input">
 			<span class="input-label">TICKET TYPE</span>
-			<ion-checkbox style="padding:0 10px 0 50px; border: 0;" data-ng-repeat="type in ticketTypes track by type.ticketTypeCode" data-ng-model="selectedTicketTypes[$index]">{{type.ticketTypeNameEn}}</ion-checkbox>
+			<ion-checkbox style="padding:10px 10px 10px 50px; border: 0;" data-ng-repeat="type in ticketTypes track by type.ticketTypeCode" data-ng-model="selectedTicketTypes[$index]">{{type.ticketTypeNameEn}}</ion-checkbox>
 		</label>
 		<label class="item item-input">
 			<span class="input-label">SEAT TYPE</span>
 			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
 		</label>
 		<li class="item">
-			<button data-ng-click="bookingController.query()">Query</button>
+			<button class="button button-block button-calm" data-ng-click="bookingController.query()">Query</button>
 		</li>
 	</ul>
   	
+  	<ul class="list">
+  		<li class="item" data-ng-repeat="train in trainList track by train.trainDirDay.id">
+  			<span class="tran-code">{{train.trainDirDay.trainCode}}</span>
+  			<span>{{train.boardStation.station.stationNameEn}}</span>
+  			<span class="ion-ios-arrow-thin-right"></span>
+  			<span>{{train.arrivalStation.station.stationNameEn}}</span>
+  		</li>
+  	</ul>
 </ion-content>
 </ion-view>

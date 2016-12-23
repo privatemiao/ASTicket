@@ -153,8 +153,8 @@ angular.module('starter.services', [])
 			});
 
 		},
-		queryTrain : function() {
-			var data = {
+		queryTrain : function(obj) {
+			var _data = {
 				"sessionId" : null,
 				"serviceName" : null,
 				"channelCode" : null,
@@ -174,14 +174,17 @@ angular.module('starter.services', [])
 				"applyCode" : null,
 				"agentRepeater" : null,
 				"encryptFlag" : false,
-				"travelDate" : 1482249600000,
+				"travelDate" : 1482422400000,
 				"boardStationCode" : "SBT",
-				"arrivalStationCode" : "BKE",
+				"arrivalStationCode" : "MJO",
 				"purposeCode" : "A1"
 			};
 
-			$http.post(variables.URLs.queryTrain, data).then(function(response) {
-				console.log(response);
+			console.log('CommonService query train ', obj);
+			$http.post(variables.URLs.queryTrain, obj.data).then(function(response) {
+				if (obj.callback) {
+					obj.callback(response);
+				}
 			}, function(response) {
 				console.error(response);
 			});
@@ -206,8 +209,8 @@ angular.module('starter.services', [])
 		getArrived : function() {
 			service.getArrived();
 		},
-		queryTrain : function() {
-			service.queryTrain();
+		queryTrain : function(obj) {
+			service.queryTrain(obj);
 		},
 		getStations : function() {
 			return variables.dict.stationList;
