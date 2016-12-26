@@ -10,6 +10,11 @@ angular.module('starter.services', [])
 			getDeparture : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetboardstation',
 			getArrived : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetarivstation',
 			queryTrain : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysfdzquery'
+		},
+		index : {
+			seatType : {
+
+			}
 		}
 	}, service = {
 		checkHealth : function() {
@@ -22,6 +27,7 @@ angular.module('starter.services', [])
 		},
 		loadData : function(callback) {
 			console.log('<LoadStation>');
+			var reference = this;
 			var data = {
 				"sessionId" : null,
 				"serviceName" : null,
@@ -46,6 +52,7 @@ angular.module('starter.services', [])
 			$http.post(variables.URLs.dict, data).then(function(response) {
 				if (response.data) {
 					variables.dict = response.data;
+					reference._indexData(response.data);
 					if (callback) {
 						callback();
 					}
@@ -53,6 +60,14 @@ angular.module('starter.services', [])
 			}, function(response) {
 				console.error(response);
 			});
+		},
+		_indexData : function(data) {
+			console.log('<indexdata>');
+			// index seattype
+			var seatTypeList = data.seatTypeList;
+			for (var i = 0; i < seatTypeList.length; i++) {
+				variables.index.seatType[seatTypeList[i].seatTypeCode] = seatTypeList[i];
+			}
 		},
 		login : function() {
 			console.log('<Login>');
@@ -220,6 +235,46 @@ angular.module('starter.services', [])
 		},
 		getSeatTypes : function() {
 			return variables.dict.seatTypeList;
+		},
+		translateTrainInfo : function(trainInfo) {
+			var seatInfos = trainInfo.seatInfo;
+			var avaliableSeats = 0;
+			var css = '';
+			for (var i = 0; i < seatInfos.length; i++) {
+				seatInfos[i].seatTypeNameEn = variables.index.seatType[seatInfos[i].seatType].seatTypeEn;
+				avaliableSeats += seatInfos[i].seatAvaliableCount;
+				if (css.length === 0){
+					css += 'seat-type-'+seatInfos[i].seatType
+				}else{
+					css += ' seat-type-'+seatInfos[i].seatType
+				}
+			}
+			seatInfos.avaliableSeats = avaliableSeats;
+			seatInfos.css = css;
+			
+		},
+		queryTrainPrice : function() {
+			/*
+			 *  String trainCode = request.getTrainCode();
+        		Date businessDate = request.getBusinessDate();
+        		String stationCode = request.getBelongStationCode();
+			 */
+			var data = {
+					trainCode : 'G1214',
+					businessDate : new Date(),
+					belongStationCode : 'SBT'
+			};
+//			$http.post('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice', JSON.stringify(data)).then(function(response) {
+//				console.log(response);
+//			}, function(response) {
+//				console.error(response);
+//			});
+			
+			$http.get('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice/G1214/SBT').then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.error(response);
+			});
 		}
 	};
 });

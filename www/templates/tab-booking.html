@@ -1,5 +1,9 @@
 <style>
-	.tran-code{
+	.train-code{
+		font-size: 2em;
+		vertical-align: middle;
+	}
+	.header{
 		font-size: 1.5em;
 	}
 </style>
@@ -42,10 +46,6 @@
 			<button class="button button-clear button-positive" data-ng-click="bookingController.openDepartureDatePicker()">{{departureDate | date:'yyyy-MM-dd'}}</button>
 		</label>
 		<label class="item item-input">
-			<span class="input-label">TICKET TYPE</span>
-			<ion-checkbox style="padding:10px 10px 10px 50px; border: 0;" data-ng-repeat="type in ticketTypes track by type.ticketTypeCode" data-ng-model="selectedTicketTypes[$index]">{{type.ticketTypeNameEn}}</ion-checkbox>
-		</label>
-		<label class="item item-input">
 			<span class="input-label">SEAT TYPE</span>
 			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
 		</label>
@@ -54,13 +54,17 @@
 		</li>
 	</ul>
   	
-  	<ul class="list">
-  		<li class="item" data-ng-repeat="train in trainList track by train.trainDirDay.id">
-  			<span class="tran-code">{{train.trainDirDay.trainCode}}</span>
-  			<span>{{train.boardStation.station.stationNameEn}}</span>
-  			<span class="ion-ios-arrow-thin-right"></span>
-  			<span>{{train.arrivalStation.station.stationNameEn}}</span>
-  		</li>
-  	</ul>
+  	<div class="row">
+  		<div class="col header">TRAIN</div>
+  		<div class="col header">DEP</div>
+  		<div class="col header">ARR</div>
+  		<div class="col header">SEATS</div>
+  	</div>
+  	<div class="row {{train.seatInfo.css}}" data-ng-repeat="train in trainList track by train.trainDirDay.id">
+		<div class="col" class="train-code">{{train.trainDirDay.trainCode}}</div>
+		<div class="col">{{train.boardStation.station.stationNameEn}}</div>
+		<div class="col">{{train.arrivalStation.station.stationNameEn}}</div>
+		<div class="col">SEATS: {{train.seatInfo.avaliableSeats}}</div>
+  	</div>
 </ion-content>
 </ion-view>

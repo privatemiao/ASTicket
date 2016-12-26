@@ -2,43 +2,12 @@ SELECT a.* FROM D101_TRAIN_DIR_DAY a WHERE a.TRAIN_CODE = 'G1214' ;
 SELECT  a.STATION_TRAIN_CODE, a.* FROM D101_STOP_TIME_DAY a WHERE a.STATION_TRAIN_CODE = 'G1214';
 
 
-SELECT distinct
-        std1.id as board_id,
-        std1.train_dir_day_id as
-        board_train_dir_day_id,
-        std1.travel_date as board_travel_date,
-        std1.station_train_code as board_station_train_code,
-        std1.station_code
-        as board_station_code,
-        std1.station_no as board_station_no,
-        std1.different_day as board_different_day,
-        std1.board_time as
-        board_board_time,
-        std1.arrival_time as board_arrival_time,
-        std1.delay_minutes as board_delay_minutes,
-        std2.id as arrival_id,
-        std2.train_dir_day_id as arrival_train_dir_day_id,
-        std2.travel_date as
-        arrival_travel_date,
-        std2.station_train_code as
-        arrival_station_train_code,
-        std2.station_code as arrival_station_code,
-        std2.station_no as arrival_station_no,
-        std2.different_day as
-        arrival_different_day,
-        std2.board_time as arrival_board_time,
-        std2.arrival_time as arrival_arrival_time,
-        std2.delay_minutes as
-        arrival_delay_minutes,
-        tdd.id as tdd_id,
-        tdd.train_id as tdd_train_id,
-        tdd.start_train_date as tdd_start_train_date,
-        tdd.train_code as
-        tdd_train_code,
-        tdd.train_type_code as tdd_train_type_code,
-        tdd.train_class_code as tdd_train_class_code
-        FROM D101_STOP_TIME_DAY
-        std1, D101_STOP_TIME_DAY std2, D101_TRAIN_DIR_DAY
-        tdd
-        WHERE
-        std1.TRAIN_DIR_DAY_ID=std2.TRAIN_DIR_DAY_ID
+SELECT * FROM D103_TRAIN_PRICE;
+SELECT * FROM D103_TRAIN_PRICE a WHERE a.TRAIN_CODE='G1214' AND a.START_DATE < '2016-12-26' AND a.END_DATE > '2016-12-26';
+
+findByTrainCodeAndStartDateBeforeAndEndDateAfter(trainCode, businessDate, businessDate)
+
+
+select trainprice0_.id as id1_40_, trainprice0_.end_date as end_date2_40_, trainprice0_.prf_id as prf_id7_40_, trainprice0_.stprice_num as stprice_8_40_, trainprice0_.sbr_id as sbr_id9_40_, trainprice0_.tkr_id as tkr_id10_40_, trainprice0_.running_cycle as running_3_40_, trainprice0_.running_rule as running_4_40_, trainprice0_.start_date as start_da5_40_, trainprice0_.train_code as train_co6_40_ from d103_train_price trainprice0_ where trainprice0_.train_code='G1214' and trainprice0_.start_date<'2016-12-26' and trainprice0_.end_date>'2016-12-26'
+
+select pricestati0_.id as id1_35_, pricestati0_.arrival_station_code as arrival_8_35_, pricestati0_.arrival_station_seq as arrival_2_35_, pricestati0_.bed_level as bed_leve3_35_, pricestati0_.board_station_code as board_st9_35_, pricestati0_.board_station_seq as board_st4_35_, pricestati0_.stprice_num as stprice10_35_, pricestati0_.seat_flag as seat_fla5_35_, pricestati0_.seat_type as seat_ty11_35_, pricestati0_.station_price_dj as station_6_35_, pricestati0_.station_price_et as station_7_35_, pricestati0_.ticket_type as ticket_12_35_ from d103_price_station_dtl pricestati0_ left outer join d103_price_station pricestati1_ on pricestati0_.stprice_num=pricestati1_.id left outer join d403_station station2_ on pricestati0_.board_station_code=station2_.station_code where pricestati1_.id='BKE' and station2_.station_code='G1214'

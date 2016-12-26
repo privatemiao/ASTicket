@@ -113,20 +113,15 @@ angular.module('starter.controllers', [])
 				console.log('Query train ', response);
 				var trainList = [];
 				if (response && response.data && response.data.success) {
-					trainList = response.data.trainInfo;
-				}
-				
-				for (var i = trainList.length - 1; i >= 0; i --){
-					if (trainList[i].seatInfo.length == 0){
-						trainList.pop();
-						continue;
+					for (var i = 0; i < response.data.trainInfo.length; i++) {
+						if (response.data.trainInfo[i].seatInfo && response.data.trainInfo[i].seatInfo.length !== 0) {
+							CommonService.translateTrainInfo(response.data.trainInfo[i]);
+							trainList.push(response.data.trainInfo[i]);
+						}
 					}
-					
-					//TODO translate seattype
 				}
-				
-				
 				$scope.trainList = trainList;
+				console.log($scope.trainList);
 			}
 		});
 	};
@@ -178,5 +173,9 @@ angular.module('starter.controllers', [])
 	this.queryTrain = function() {
 		console.log('trige queryTrain');
 		CommonService.queryTrain();
+	};
+	this.queryPrice = function() {
+		console.log('trige queryPrice');
+		CommonService.queryTrainPrice();
 	};
 })
