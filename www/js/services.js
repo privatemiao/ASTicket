@@ -15,7 +15,8 @@ angular.module('starter.services', [])
 			seatType : {
 
 			}
-		}
+		},
+		obj : {}
 	}, service = {
 		checkHealth : function() {
 			console.log('<CheckHealth>');
@@ -27,6 +28,11 @@ angular.module('starter.services', [])
 		},
 		loadData : function(callback) {
 			console.log('<LoadStation>');
+
+			if (window.localStorage.obj) {
+				variables.obj = JSON.parse(window.localStorage.obj);
+			}
+
 			var reference = this;
 			var data = {
 				"sessionId" : null,
@@ -239,37 +245,38 @@ angular.module('starter.services', [])
 		translateTrainInfo : function(trainInfo) {
 			var seatInfos = trainInfo.seatInfo;
 			var avaliableSeats = 0;
-//			var css = '';
+			// var css = '';
 			for (var i = 0; i < seatInfos.length; i++) {
 				seatInfos[i].seatTypeNameEn = variables.index.seatType[seatInfos[i].seatType].seatTypeEn;
 				avaliableSeats += seatInfos[i].seatAvaliableCount;
-//				if (css.length === 0){
-//					css += 'seat-type-'+seatInfos[i].seatType
-//				}else{
-//					css += ' seat-type-'+seatInfos[i].seatType
-//				}
+				// if (css.length === 0){
+				// css += 'seat-type-'+seatInfos[i].seatType
+				// }else{
+				// css += ' seat-type-'+seatInfos[i].seatType
+				// }
 			}
 			seatInfos.avaliableSeats = avaliableSeats;
-//			seatInfos.css = css;
-			
+			// seatInfos.css = css;
+
 		},
 		queryTrainPrice : function() {
 			/*
-			 *  String trainCode = request.getTrainCode();
-        		Date businessDate = request.getBusinessDate();
-        		String stationCode = request.getBelongStationCode();
+			 * String trainCode = request.getTrainCode(); Date businessDate =
+			 * request.getBusinessDate(); String stationCode =
+			 * request.getBelongStationCode();
 			 */
 			var data = {
-					trainCode : 'G1214',
-					businessDate : new Date(),
-					belongStationCode : 'SBT'
+				trainCode : 'G1214',
+				businessDate : new Date(),
+				belongStationCode : 'SBT'
 			};
-//			$http.post('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice', JSON.stringify(data)).then(function(response) {
-//				console.log(response);
-//			}, function(response) {
-//				console.error(response);
-//			});
-			
+			// $http.post('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice',
+			// JSON.stringify(data)).then(function(response) {
+			// console.log(response);
+			// }, function(response) {
+			// console.error(response);
+			// });
+
 			$http.get('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice/G1214/SBT').then(function(response) {
 				console.log(response);
 			}, function(response) {

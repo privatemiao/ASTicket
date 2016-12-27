@@ -35,6 +35,38 @@
   </ion-modal-view>
 </script>
 
+<script id="modal-order.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Order</h1>
+    </ion-header-bar>
+    <ion-content>
+		<ul class="list">
+			<label class="item item-input">
+    			<span class="input-label">TRAIN CODE</span>
+    			<span>{{order.trainDirDay.trainCode}}</span>
+  			</label>
+			<label class="item item-input">
+    			<span class="input-label">DEPARTURE</span>
+    			<span>{{order.boardStation.station.stationNameEn}}</span>
+  			</label>
+			<label class="item item-input">
+    			<span class="input-label">ARRIVED</span>
+    			<span>{{order.arrivalStation.station.stationNameEn}}</span>
+  			</label>
+			<label class="item item-input">
+    			<span class="input-label">AVALIABLESEAT</span>
+    			<span>{{order.seatInfo.avaliableSeats}}</span>
+  			</label>
+			<li class="item">
+				<button class="button button-block button-assertive" data-ng-click="bookingController.confirm()">Confirm</button>
+				<button class="button button-block button-dark" data-ng-click="orderModal.hide()">Cancel</button>
+			</li>
+		</ul>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
 	<ul class="list">
 		<li class="item" style="text-align: center;">
 			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Departure Station')">{{departureStation.stationNameEn}}</button>
@@ -64,7 +96,7 @@
 		  		<div class="col header">SEATS</div>
 		  	</div>
 		</div>
-		<a data-ng-hide="train.visible == false" href="" class="item" data-ng-click="alert()" data-ng-repeat="train in trainList track by train.trainDirDay.id">
+		<a data-ng-hide="train.visible == false" href="" class="item" data-ng-click="bookingController.popOrder(train)" data-ng-repeat="train in trainList track by train.trainDirDay.id">
 		  	<div class="row {{train.seatInfo.css}}">
 				<div class="col" class="train-code">{{train.trainDirDay.trainCode}}</div>
 				<div class="col">{{train.boardStation.station.stationNameEn}}</div>

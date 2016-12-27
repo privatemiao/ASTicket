@@ -5,6 +5,7 @@ angular.module('starter.controllers', [])
 	$scope.departureDate = new Date();
 	$scope.selectedTicketTypes = [];
 	$scope.selectedSeatTypes = [];
+	$scope.order = {};
 
 	/*
 	 * 根据条件检索出来的结果 \ 检索条件为 乘坐日期、乘坐站、到达站 \ 其它条件在检索出来后，通过样式控制是否可见
@@ -23,12 +24,28 @@ angular.module('starter.controllers', [])
 		$scope.loadingModal.show();
 	});
 
+	$ionicModal.fromTemplateUrl('modal-order.html', {
+		scope : $scope,
+		animation : 'slide-in-up'
+	}).then(function(modal) {
+		$scope.orderModal = modal;
+	});
+
 	$ionicModal.fromTemplateUrl('modal-stations.html', {
 		scope : $scope,
 		animation : 'slide-in-up'
 	}).then(function(modal) {
 		$scope.modal = modal;
 	});
+
+	this.popOrder = function(train) {
+		$scope.order = train;
+		$scope.orderModal.show();
+	};
+
+	this.confirm = function() {
+		
+	};
 
 	this.openDepartureDatePicker = function() {
 		ionicDatePicker.openDatePicker({
@@ -126,7 +143,8 @@ angular.module('starter.controllers', [])
 					}
 				}
 				dofilter(trainList);
-//				$location.path('/tab/booking/train-list').search({trainList : trainList});
+				// $location.path('/tab/booking/train-list').search({trainList :
+				// trainList});
 				$scope.trainList = trainList;
 			}
 		});
@@ -170,7 +188,6 @@ angular.module('starter.controllers', [])
 		});
 	}
 
-	
 	this.show = function() {
 		console.log($scope.trainList);
 	};
@@ -198,11 +215,10 @@ angular.module('starter.controllers', [])
 		console.log('removed');
 		// Execute action
 	});
-}).controller("TrainListController", function($location){
+}).controller("TrainListController", function($location) {
 	console.log('PARAMS', $location.search());
-	
-})
-.controller('InquireController', function($scope) {
+
+}).controller('InquireController', function($scope) {
 }).controller('AccountController', function($scope, CommonService) {
 	this.login = function() {
 		console.log('trige login');
