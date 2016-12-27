@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BookingController', function($scope, $ionicModal, CommonService, ionicDatePicker) {
+.controller('BookingController', function($scope, $ionicModal, CommonService, ionicDatePicker, $location) {
 	var reference = this, MODAL_TITLE_DEPARTURE = 'Departure Station', MODAL_TITLE_ARRIVED = 'Arrived Station';
 	$scope.departureDate = new Date();
 	$scope.selectedTicketTypes = [];
@@ -126,6 +126,7 @@ angular.module('starter.controllers', [])
 					}
 				}
 				dofilter(trainList);
+//				$location.path('/tab/booking/train-list').search({trainList : trainList});
 				$scope.trainList = trainList;
 			}
 		});
@@ -197,7 +198,11 @@ angular.module('starter.controllers', [])
 		console.log('removed');
 		// Execute action
 	});
-}).controller('InquireController', function($scope) {
+}).controller("TrainListController", function($location){
+	console.log('PARAMS', $location.search());
+	
+})
+.controller('InquireController', function($scope) {
 }).controller('AccountController', function($scope, CommonService) {
 	this.login = function() {
 		console.log('trige login');
