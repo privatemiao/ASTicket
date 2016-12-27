@@ -47,7 +47,7 @@
 		</label>
 		<label class="item item-input">
 			<span class="input-label">SEAT TYPE</span>
-			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
+			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-click="bookingController.seatTypeTrigged()" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
 		</label>
 		<li class="item">
 			<button class="button button-block button-calm" data-ng-click="bookingController.query()">Query</button>
@@ -60,11 +60,14 @@
   		<div class="col header">ARR</div>
   		<div class="col header">SEATS</div>
   	</div>
-  	<div class="row {{train.seatInfo.css}}" data-ng-repeat="train in trainList track by train.trainDirDay.id">
+  	<div data-ng-hide="train.visible == false" class="row {{train.seatInfo.css}}" data-ng-repeat="train in trainList track by train.trainDirDay.id">
 		<div class="col" class="train-code">{{train.trainDirDay.trainCode}}</div>
 		<div class="col">{{train.boardStation.station.stationNameEn}}</div>
 		<div class="col">{{train.arrivalStation.station.stationNameEn}}</div>
 		<div class="col">SEATS: {{train.seatInfo.avaliableSeats}}</div>
+  	</div>
+  	<div class="list">
+  		<div class="item"><button class="button" data-ng-click="bookingController.show()">show train</button></div>
   	</div>
 </ion-content>
 </ion-view>

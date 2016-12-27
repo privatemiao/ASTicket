@@ -239,18 +239,18 @@ angular.module('starter.services', [])
 		translateTrainInfo : function(trainInfo) {
 			var seatInfos = trainInfo.seatInfo;
 			var avaliableSeats = 0;
-			var css = '';
+//			var css = '';
 			for (var i = 0; i < seatInfos.length; i++) {
 				seatInfos[i].seatTypeNameEn = variables.index.seatType[seatInfos[i].seatType].seatTypeEn;
 				avaliableSeats += seatInfos[i].seatAvaliableCount;
-				if (css.length === 0){
-					css += 'seat-type-'+seatInfos[i].seatType
-				}else{
-					css += ' seat-type-'+seatInfos[i].seatType
-				}
+//				if (css.length === 0){
+//					css += 'seat-type-'+seatInfos[i].seatType
+//				}else{
+//					css += ' seat-type-'+seatInfos[i].seatType
+//				}
 			}
 			seatInfos.avaliableSeats = avaliableSeats;
-			seatInfos.css = css;
+//			seatInfos.css = css;
 			
 		},
 		queryTrainPrice : function() {

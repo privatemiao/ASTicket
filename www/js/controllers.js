@@ -5,10 +5,15 @@ angular.module('starter.controllers', [])
 	$scope.departureDate = new Date();
 	$scope.selectedTicketTypes = [];
 	$scope.selectedSeatTypes = [];
+
 	/*
 	 * 根据条件检索出来的结果 \ 检索条件为 乘坐日期、乘坐站、到达站 \ 其它条件在检索出来后，通过样式控制是否可见
 	 */
 	$scope.trainList = [];
+
+	this.seatTypeTrigged = function() {
+		dofilter($scope.trainList);
+	};
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
 		scope : $scope,
@@ -120,14 +125,53 @@ angular.module('starter.controllers', [])
 						}
 					}
 				}
+				dofilter(trainList);
 				$scope.trainList = trainList;
-				console.log($scope.trainList);
 			}
 		});
 	};
 
-	this.checkTicketType = function(type) {
-		console.log(type);
+	function dofilter(trainList) {
+		if (!trainList || trainList.length === 0) {
+			return;
+		}
+		if ($scope.selectedSeatTypes.length === 0) {
+			console.log('None SeatTyp filter');
+			return;
+		}
+		var typeCodes = [];
+		var codeIndex = {};
+		for (var i = 0; i < $scope.selectedSeatTypes.length; i++) {
+			console.log($scope.selectedSeatTypes[i]);
+			if ($scope.selectedSeatTypes[i]) {
+				var type = $scope.seatTypes[i];
+				console.log(type);
+				typeCodes.push(type.seatTypeCode);
+				codeIndex[type.seatTypeCode] = type.seatTypeEn;
+			}
+		}
+		if (typeCodes.length === 0) {
+			trainList.forEach(function(train) {
+				train.visible = true;
+			});
+			return;
+		}
+
+		console.log(codeIndex);
+
+		trainList.forEach(function(train) {
+			train.visible = false;
+			train.seatInfo.forEach(function(seat) {
+				if (codeIndex[seat.seatType]) {
+					train.visible = true;
+				}
+			});
+		});
+	}
+
+	
+	this.show = function() {
+		console.log($scope.trainList);
 	};
 
 	$scope.openModal = function() {
@@ -178,4 +222,5 @@ angular.module('starter.controllers', [])
 		console.log('trige queryPrice');
 		CommonService.queryTrainPrice();
 	};
+
 })
