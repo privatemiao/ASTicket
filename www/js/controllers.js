@@ -44,7 +44,10 @@ angular.module('starter.controllers', [])
 	};
 
 	this.confirm = function() {
-		
+		CommonService.buyTickets({
+			order : $scope.order,
+			departureDate : $scope.departureDate
+		});
 	};
 
 	this.openDepartureDatePicker = function() {
@@ -143,8 +146,6 @@ angular.module('starter.controllers', [])
 					}
 				}
 				dofilter(trainList);
-				// $location.path('/tab/booking/train-list').search({trainList :
-				// trainList});
 				$scope.trainList = trainList;
 			}
 		});
@@ -243,5 +244,8 @@ angular.module('starter.controllers', [])
 		console.log('trige queryPrice');
 		CommonService.queryTrainPrice();
 	};
+	this.getTickets = function(){
+		CommonService.getTickets();
+	}
 
 })

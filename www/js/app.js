@@ -66,17 +66,6 @@ angular.module('starter', [ 'ionic', 'ionic-datepicker', 'starter.controllers', 
 		}
 	})
 
-	.state('tab.train-list', {
-		url : '/booking/train-list',
-		views : {
-			'tab-booking' : {
-				templateUrl : 'templates/train-list.html',
-				controller : 'TrainListController',
-				controllerAs : 'trainListController'
-			}
-		}
-	})
-
 	.state('tab.inquire', {
 		url : '/inquire',
 		views : {

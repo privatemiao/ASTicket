@@ -58,6 +58,14 @@
     			<span class="input-label">AVALIABLESEAT</span>
     			<span>{{order.seatInfo.avaliableSeats}}</span>
   			</label>
+			<label class="item item-input">
+				<span class="input-label">SEATTYPE</span>
+				<select ng-options="seat as seat.seatTypeNameEn for seat in order.seatInfo track by seat.seatType" ng-model="order.seat"></select>
+			</label>
+			<label class="item item-input">
+    			<span class="input-label">QUANTITY</span>
+    			<input type="text" data-ng-model="order.quantity" />
+  			</label>
 			<li class="item">
 				<button class="button button-block button-assertive" data-ng-click="bookingController.confirm()">Confirm</button>
 				<button class="button button-block button-dark" data-ng-click="orderModal.hide()">Cancel</button>

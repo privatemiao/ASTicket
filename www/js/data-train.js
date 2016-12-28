@@ -1,196 +1,48 @@
 var a = {
-	"trainInfo" : [ {
-		"trainDirDay" : {
-			"id" : 100171,
-			"trainId" : "ERC-T1001-0",
-			"startTrainDate" : 1482422400000,
-			"trainCode" : "T1001",
-			"trainType" : {
-				"trainTypeCode" : "2"
-			},
-			"trainClass" : {
-				"trainClassCode" : "3"
-			}
-		},
-		"ticketKind" : {
-			"ticketKindCode" : "A",
-			"ticketKindNameCn" : "境内票",
-			"ticketKindNameEn" : "Inner-Border",
-			"ticketKindNameDj" : null,
-			"ticketKindNameEt" : null
-		},
-		"boardStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "T1001",
-			"station" : {
-				"stationCode" : "SBT",
-				"stationNameCn" : "瑟伯塔",
-				"stationNameEn" : "SEBETTA",
-				"stationNameDj" : "",
-				"stationNameEt" : "ሰበታ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "1",
-			"differentDay" : 0,
-			"boardTime" : 1420099200000,
-			"arrivalTime" : null,
-			"delayMinutes" : 0
-		},
-		"arrivalStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "T1001",
-			"station" : {
-				"stationCode" : "BKE",
-				"stationNameCn" : "柏克",
-				"stationNameEn" : "BIKE",
-				"stationNameDj" : "",
-				"stationNameEt" : "ቢክ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "4",
-			"differentDay" : 0,
-			"boardTime" : null,
-			"arrivalTime" : 1420117200000,
-			"delayMinutes" : 0
-		},
-		"seatInfo" : []
-	}, {
-		"trainDirDay" : {
-			"id" : 100290,
-			"trainId" : "ERC-G125-0",
-			"startTrainDate" : 1482422400000,
-			"trainCode" : "G125",
-			"trainType" : {
-				"trainTypeCode" : "2"
-			},
-			"trainClass" : {
-				"trainClassCode" : "4"
-			}
-		},
-		"ticketKind" : {
-			"ticketKindCode" : "A",
-			"ticketKindNameCn" : "境内票",
-			"ticketKindNameEn" : "Inner-Border",
-			"ticketKindNameDj" : null,
-			"ticketKindNameEt" : null
-		},
-		"boardStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "G125",
-			"station" : {
-				"stationCode" : "SBT",
-				"stationNameCn" : "瑟伯塔",
-				"stationNameEn" : "SEBETTA",
-				"stationNameDj" : "",
-				"stationNameEt" : "ሰበታ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "1",
-			"differentDay" : 0,
-			"boardTime" : 1420100160000,
-			"arrivalTime" : null,
-			"delayMinutes" : 0
-		},
-		"arrivalStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "G125",
-			"station" : {
-				"stationCode" : "BKE",
-				"stationNameCn" : "柏克",
-				"stationNameEn" : "BIKE",
-				"stationNameDj" : "",
-				"stationNameEt" : "ቢክ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "4",
-			"differentDay" : 0,
-			"boardTime" : null,
-			"arrivalTime" : 1420119000000,
-			"delayMinutes" : 0
-		},
-		"seatInfo" : []
-	}, {
-		"trainDirDay" : {
-			"id" : 100308,
-			"trainId" : "ERC-G1214-0",
-			"startTrainDate" : 1482422400000,
-			"trainCode" : "G1214",
-			"trainType" : {
-				"trainTypeCode" : "2"
-			},
-			"trainClass" : {
-				"trainClassCode" : "2"
-			}
-		},
-		"ticketKind" : {
-			"ticketKindCode" : "A",
-			"ticketKindNameCn" : "境内票",
-			"ticketKindNameEn" : "Inner-Border",
-			"ticketKindNameDj" : null,
-			"ticketKindNameEt" : null
-		},
-		"boardStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "G1214",
-			"station" : {
-				"stationCode" : "SBT",
-				"stationNameCn" : "瑟伯塔",
-				"stationNameEn" : "SEBETTA",
-				"stationNameDj" : "",
-				"stationNameEt" : "ሰበታ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "1",
-			"differentDay" : 0,
-			"boardTime" : 1420106400000,
-			"arrivalTime" : null,
-			"delayMinutes" : 0
-		},
-		"arrivalStation" : {
-			"travelDate" : 1482422400000,
-			"stationTrainCode" : "G1214",
-			"station" : {
-				"stationCode" : "BKE",
-				"stationNameCn" : "柏克",
-				"stationNameEn" : "BIKE",
-				"stationNameDj" : "",
-				"stationNameEt" : "ቢክ",
-				"company" : {
-					"railcompanyCode" : "E1"
-				},
-				"stationTelecode" : null
-			},
-			"stationNo" : "4",
-			"differentDay" : 0,
-			"boardTime" : null,
-			"arrivalTime" : 1420120800000,
-			"delayMinutes" : 0
-		},
-		"seatInfo" : [ {
-			"seatType" : "3",
-			"seatFlag" : 1,
-			"price" : null,
-			"seatAvaliableCount" : 66
-		}, {
-			"seatType" : "1",
-			"seatFlag" : 1,
-			"price" : null,
-			"seatAvaliableCount" : 228
-		} ]
-	} ]
-};
+		  "success" : true,
+		  "message" : "OK",
+		  "encryptFlag" : false,
+		  "trainInfo" : [ {
+		    "transactionNum" : "E1SBT0110220161228160454719",
+		    "transactionType" : "1",
+		    "trainId" : "ERC-G1214-0",
+		    "startTrainDate" : 1482854400000,
+		    "trainCode" : "G1214",
+		    "stationTrainCode" : "G1214",
+		    "trainTypeCode" : "2",
+		    "trainClassCode" : "2",
+		    "travelDate" : 1482854400000,
+		    "boardStationCode" : "LBU",
+		    "boardStationName" : "LABU",
+		    "arrivalStationCode" : "BKE",
+		    "arrivalStationName" : "BIKE",
+		    "boardTime" : 1420110180000,
+		    "arrivalTime" : 1420120800000,
+		    "differentDay" : "0",
+		    "distance" : "546.0",
+		    "ticketKind" : "B",
+		    "ticketInfo" : [ {
+		      "tempStubNum" : "100242",
+		      "coachNo" : "1",
+		      "seatType" : "1",
+		      "bedLevel" : "0",
+		      "coachLeve" : "0",
+		      "seatFlag" : "1",
+		      "ticketType" : "10",
+		      "seatNo" : "13",
+		      "seatName" : "13",
+		      "purpose" : "A1",
+		      "offSiteSign" : "1",
+		      "offSiteFee" : 0.0,
+		      "paymentCurrency" : "Br",
+		      "printPriceOrig" : 180.0,
+		      "changeType" : null,
+		      "priceDifference" : null,
+		      "pamentCode" : null,
+		      "acturalPaymentCurrency" : null,
+		      "acturalPaymenAmount" : null,
+		      "changeTimes" : 0,
+		      "oldTicketSaleNum" : null
+		    } ]
+		  } ]
+		};

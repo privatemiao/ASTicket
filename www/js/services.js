@@ -5,12 +5,17 @@ angular.module('starter.services', [])
 		dict : {},
 		URLs : {
 			health : 'http://' + window.variables.server + '/core-main/health',
+			getNextRollerNo : 'http://' + window.variables.server + "/core-main/api/v1/transaction/post/volume/sysqueryticketno",
 			dict : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/sysNormalMor',
 			login : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/syswindowlogin',
 			getDeparture : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetboardstation',
 			getArrived : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetarivstation',
-			queryTrain : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysfdzquery'
+			queryTrain : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysfdzquery',
+			getTickets : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/transaction/sysseatapply',
+			buyTicket : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/transaction/sysrecordsalestub'
 		},
+		nowRollerNo : '',
+		nextRollerNo : '',
 		index : {
 			seatType : {
 
@@ -59,6 +64,7 @@ angular.module('starter.services', [])
 				if (response.data) {
 					variables.dict = response.data;
 					reference._indexData(response.data);
+					reference._getNextRollerNo();
 					if (callback) {
 						callback();
 					}
@@ -67,9 +73,40 @@ angular.module('starter.services', [])
 				console.error(response);
 			});
 		},
+		_getNextRollerNo : function() {
+			var data = {
+				"sessionId" : null,
+				"serviceName" : null,
+				"channelCode" : null,
+				"ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"operatorNo" : null,
+				"shiftCode" : null,
+				"innerCode" : null,
+				"belongStationCode" : null,
+				"money" : null,
+				"runMode" : null,
+				"ipAddress" : null,
+				"systemCode" : null,
+				"deviceIdentity" : null,
+				"licenceCode" : null,
+				"applyCode" : null,
+				"agentRepeater" : null,
+				"encryptFlag" : false,
+				"windowTicketNo" : null,
+				"systemTime" : null
+			};
+			$http.post(variables.URLs.getNextRollerNo, data).then(function(response) {
+				variables.nowRollerNo = response.data.nowRollerNo;
+				variables.nextRollerNo = response.data.nextRollerNo;
+			}, function(response) {
+				console.error(response);
+			});
+		},
 		_indexData : function(data) {
 			console.log('<indexdata>');
-			// index seattype
+			// index seat type
 			var seatTypeList = data.seatTypeList;
 			for (var i = 0; i < seatTypeList.length; i++) {
 				variables.index.seatType[seatTypeList[i].seatTypeCode] = seatTypeList[i];
@@ -282,6 +319,129 @@ angular.module('starter.services', [])
 			}, function(response) {
 				console.error(response);
 			});
+		},
+		getTickets : function(obj) {
+			console.log('CommonService.getTickets', obj);
+			var reference = this;
+			var data = {
+				// "sessionId" : null,
+				// "serviceName" : null,
+				"channelCode" : "1",
+				// "ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"operatorNo" : "sbts01",
+				"shiftCode" : "A",
+				"innerCode" : "SBT01",
+				// "belongStationCode" : "SBT",
+				// "money" : null,
+				// "runMode" : null,
+				// "ipAddress" : "192.168.94.2",
+				// "systemCode" : null,
+				// "deviceIdentity" : null,
+				// "licenceCode" : null,
+				// "applyCode" : null,
+				// "agentRepeater" : null,
+				// "encryptFlag" : false,
+				"applyType" : "1",
+				"bookDate" : new Date().getTime(),
+				"transactionType" : "1",
+				"paymentCurrency" : "Br",
+				"transactionNum" : "",
+				"trainId" : obj.order.trainDirDay.trainId,
+				"trainCode" : obj.order.trainDirDay.trainCode,
+				"stationTrainCode" : obj.order.trainDirDay.trainCode,
+				"startTrainDate" : new Date(obj.departureDate.getTime()).setHours(0, 0, 0, 0),
+				"travelDate" : new Date(obj.departureDate.getTime()).setHours(0, 0, 0, 0),
+				"trainTypeCode" : obj.order.trainDirDay.trainType.trainTypeCode,
+				"trainClassCode" : obj.order.trainDirDay.trainClass.trainClassCode,
+				"boardStationCode" : obj.order.boardStation.station.stationCode,
+				"boardStationName" : obj.order.boardStation.station.stationNameEn,
+				// "boardStationSeq" : 2,
+				"boardTime" : obj.order.boardStation.boardTime,
+				"arrivalStationCode" : obj.order.arrivalStation.station.stationCode,
+				"arrivalStationSeq" : obj.order.arrivalStation.stationNo,
+				"arrivalStationName" : obj.order.arrivalStation.station.stationNameEn,
+				"arrivalTime" : obj.order.arrivalStation.arrivalTime,
+				"ticketKind" : obj.order.ticketKind.ticketKindCode,
+				"seatTypeCode" : obj.order.seat.seatType,
+				"ticketInfo" : [ {
+					"ticketType" : "10",
+					"count" : obj.order.quantity
+				} ],
+				"seatFlag" : obj.order.seat.seatFlag,
+				"purposeCode" : "A1"
+			// ,"coachNo" : "",
+			// "seatNo" : "",
+			// "bedLevel" : "",
+			// "differentDay" : "0",
+			// "distance" : 777.0
+			};
+
+			$http.post(variables.URLs.getTickets, data).then(function(response) {
+				console.log(response);
+				if (!response.data.success) {
+					return;
+				}
+				reference._doBuyTicket(response.data.trainInfo[0]);
+			}, function(response) {
+				console.error(response);
+			});
+		},
+		_doBuyTicket : function(train) {
+			var data = {
+				"sessionId" : null,
+				"serviceName" : null,
+				"channelCode" : "1",
+				"ticketStationCode" : "SBT",
+				"officeNo" : "SBT01",
+				"windowNo" : "102",
+				"operatorNo" : "sbts01",
+				"shiftCode" : "A",
+				"innerCode" : null,
+				"belongStationCode" : null,
+				"money" : null,
+				"runMode" : "",
+				"ipAddress" : null,
+				"systemCode" : null,
+				"deviceIdentity" : null,
+				"licenceCode" : null,
+				"applyCode" : null,
+				"agentRepeater" : null,
+				"encryptFlag" : false,
+				"transactionNum" : train.transactionNum,
+				"transactionType" : train.transactionType,
+				"paymentCode" : "1",
+				"paymentType" : "1",
+				"paymentCur" : "Br",
+				"shiftNum" : "100080",
+				"shiftTypeId" : 100003,
+				"tempStubs" : [ {
+					"tempStubNum" : train.ticketInfo[0].tempStubNum,
+					"paymentAmount" : train.ticketInfo[0].paymentCurrency,
+					"surname" : null,
+					"mobileNumber" : null,
+					"certificateType" : null,
+					"certificateNo" : null,
+					"printTicketNo" : variables.nextRollerNo,
+					"ticketNum" : (function() {
+						var date = new Date();
+						var s = ('' + date.getFullYear()).substring(2) + (date.getMonth() + 1) + date.getDate();
+						return 'SBT01102' + s + variables.nextRollerNo
+					})()
+				} ]
+			};
+			console.log('BUY', data);
+			$http.post(variables.URLs.buyTicket, data).then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.error(response);
+			});
+
+		},
+		buyTickets : function(obj) {
+			console.log('CommonService.buyTickets', obj);
+			this.getTickets(obj);
 		}
 	};
 });
