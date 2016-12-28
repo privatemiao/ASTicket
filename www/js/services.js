@@ -418,7 +418,7 @@ angular.module('starter.services', [])
 				"shiftTypeId" : 100003,
 				"tempStubs" : [ {
 					"tempStubNum" : train.ticketInfo[0].tempStubNum,
-					"paymentAmount" : train.ticketInfo[0].paymentCurrency,
+					"paymentAmount" : train.ticketInfo[0].printPriceOrig,
 					"surname" : null,
 					"mobileNumber" : null,
 					"certificateType" : null,
