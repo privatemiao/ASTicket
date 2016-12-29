@@ -379,7 +379,6 @@ angular.module('starter.services', [])
 			};
 
 			$http.post(variables.URLs.getTickets, data).then(function(response) {
-				console.log(response);
 				if (!response.data.success) {
 					return;
 				}
@@ -433,14 +432,17 @@ angular.module('starter.services', [])
 			};
 			console.log('BUY', data);
 			$http.post(variables.URLs.buyTicket, data).then(function(response) {
-				console.log(response);
+				if (response.success){
+					variables.nextRollerNo = response.nextRollerNo;
+				}else{
+					alert("Buy Ticket Fail " + response.message);
+				}
 			}, function(response) {
 				console.error(response);
 			});
 
 		},
 		buyTickets : function(obj) {
-			console.log('CommonService.buyTickets', obj);
 			this.getTickets(obj);
 		}
 	};
