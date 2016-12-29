@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('CommonService', function($http) {
+.factory('CommonService', function($http, $q) {
 	var variables = {
 		dict : {},
 		URLs : {
@@ -322,6 +322,7 @@ angular.module('starter.services', [])
 		},
 		getTickets : function(obj) {
 			console.log('CommonService.getTickets', obj);
+			var defer = $q.defer();
 			var reference = this;
 			var data = {
 				// "sessionId" : null,
@@ -380,14 +381,26 @@ angular.module('starter.services', [])
 
 			$http.post(variables.URLs.getTickets, data).then(function(response) {
 				if (!response.data.success) {
-					return;
+					defer.reject(response);
+					return defer.promise;
 				}
-				reference._doBuyTicket(response.data.trainInfo[0]);
+				reference._doBuyTicket(response.data.trainInfo[0]).then(function(response) {
+					console.log('SUCCESS', response);
+					defer.resolve(response);
+				}, function(response) {
+					console.log('ERROR', response);
+					defer.reject(response);
+				});
 			}, function(response) {
 				console.error(response);
+				defer.reject(response);
 			});
+
+			return defer.promise;
 		},
 		_doBuyTicket : function(train) {
+			var defer = $q.defer();
+
 			var data = {
 				"sessionId" : null,
 				"serviceName" : null,
@@ -432,18 +445,34 @@ angular.module('starter.services', [])
 			};
 			console.log('BUY', data);
 			$http.post(variables.URLs.buyTicket, data).then(function(response) {
-				if (response.success){
-					variables.nextRollerNo = response.nextRollerNo;
-				}else{
-					alert("Buy Ticket Fail " + response.message);
+				console.log('RESULT', response);
+				if (response.data.success) {
+					variables.nextRollerNo = response.data.nextRollerNo;
+					defer.resolve(response);
+				} else {
+					console.log(response);
+					defer.reject(response);
 				}
 			}, function(response) {
 				console.error(response);
 			});
 
+			return defer.promise;
+
 		},
 		buyTickets : function(obj) {
-			this.getTickets(obj);
+			var reference = this;
+			var i = 0;
+			(function _callGetTicket() {
+				reference.getTickets(obj).then(function(response) {
+					if (++i < obj.order.quantity){
+						_callGetTicket();
+					}
+				}, function(response) {
+					console.log('ERROR', response);
+				});
+			})();
+			// this.getTickets(obj);
 		}
 	};
 });
