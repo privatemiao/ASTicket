@@ -9,6 +9,29 @@
 </style>
 <ion-view view-title="Booking">
 <ion-content>
+
+<script id="modal-login.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">{{modalStationTitle}}</h1>
+    </ion-header-bar>
+    <ion-content>
+    	<div class="list">
+  			<label class="item item-input">
+    			<span class="input-label">Username</span>
+    			<input type="text" value="sbts01">
+  			</label>
+  			<label class="item item-input">
+    			<span class="input-label">Password</span>
+    			<input type="password" value="admin">
+  			</label>
+		</div>
+		<button class="button button-block button-positive" data-ng-click="bookingController.login()">
+  			Login
+		</button>
+    </ion-content>
+  </ion-modal-view>
+</script>
   	
 <script id="modal-stations.html" type="text/ng-template">
   <ion-modal-view>

@@ -16,6 +16,19 @@ angular.module('starter.controllers', [])
 		dofilter($scope.trainList);
 	};
 
+	$ionicModal.fromTemplateUrl('modal-login.html', {
+		scope : $scope,
+		animation : 'slide-in-up'
+	}).then(function(modal) {
+		$scope.loginModal = modal;
+		$scope.loginModal.show();
+	});
+
+	this.login = function() {
+		CommonService.login();
+		$scope.loginModal.hide();
+	};
+
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
 		scope : $scope,
 		animation : 'slide-in-up'
@@ -244,7 +257,7 @@ angular.module('starter.controllers', [])
 		console.log('trige queryPrice');
 		CommonService.queryTrainPrice();
 	};
-	this.getTickets = function(){
+	this.getTickets = function() {
 		CommonService.getTickets();
 	}
 
