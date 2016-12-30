@@ -21,12 +21,15 @@ angular.module('starter.controllers', [])
 		animation : 'slide-in-up'
 	}).then(function(modal) {
 		$scope.loginModal = modal;
-		$scope.loginModal.show();
+		if(!window.login){
+			$scope.loginModal.show();
+		}
 	});
 
 	this.login = function() {
 		CommonService.login();
 		$scope.loginModal.hide();
+		window.isLogin = true;
 	};
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {

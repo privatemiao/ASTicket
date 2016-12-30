@@ -400,7 +400,7 @@ angular.module('starter.services', [])
 		},
 		_doBuyTicket : function(train) {
 			var defer = $q.defer();
-
+			var reference = this;
 			var data = {
 				"sessionId" : null,
 				"serviceName" : null,
@@ -443,11 +443,11 @@ angular.module('starter.services', [])
 					})()
 				} ]
 			};
-			console.log('BUY', data);
 			$http.post(variables.URLs.buyTicket, data).then(function(response) {
 				console.log('RESULT', response);
 				if (response.data.success) {
 					variables.nextRollerNo = response.data.nextRollerNo;
+					reference.saveOrder(train, data);
 					defer.resolve(response);
 				} else {
 					console.log(response);
@@ -460,12 +460,46 @@ angular.module('starter.services', [])
 			return defer.promise;
 
 		},
+		saveOrder : function(train, data) {
+			console.log('Save Order');
+			console.log(train);
+			console.log(data);
+			var order = {
+				transactionNum : train.train,
+				trainCode : train.trainCode,
+				trainId : train.trainId,
+				travelDate : train.travelDate,
+				boardTime : train.boardTime,
+				arrivalTime : train.arrivalTime,
+				boardStationName : train.boardStationName,
+				arrivalStationName : train.arrivalStationName,
+				printTicketNo : train.printTicketNo,
+				ticketNum : train.ticketNum,
+				id : (function() {
+					var time = new Date(train.boardTime);// getMinutes()
+					return new Date(train.travelDate).setHours(time.getHours(), time.getMinutes(), time.getSeconds(), 0);
+				})()
+			};
+			console.log('Save', order);
+			var orders = window.localStorage.getItem("orders");
+			console.log('From Storage ', orders);
+			if (!orders) {
+				orders = [];
+			}else{
+				orders = JSON.parse(orders);
+			}
+			orders.push(order);
+			orders.sort(function(a, b) {
+				return a.id - b.id;
+			});
+			window.localStorage.setItem('orders', JSON.stringify(orders));
+		},
 		buyTickets : function(obj) {
 			var reference = this;
 			var i = 0;
 			(function _callGetTicket() {
 				reference.getTickets(obj).then(function(response) {
-					if (++i < obj.order.quantity){
+					if (++i < obj.order.quantity) {
 						_callGetTicket();
 					}
 				}, function(response) {
