@@ -1,6 +1,7 @@
 angular.module('starter.services', [])
 
 .factory('CommonService', function($http, $q) {
+	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
 	var variables = {
 		dict : {},
 		URLs : {
@@ -368,7 +369,7 @@ angular.module('starter.services', [])
 				"seatTypeCode" : obj.order.seat.seatType,
 				"ticketInfo" : [ {
 					"ticketType" : "10",
-					"count" : obj.order.quantity
+					"count" : 1
 				} ],
 				"seatFlag" : obj.order.seat.seatFlag,
 				"purposeCode" : "A1"
