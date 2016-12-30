@@ -45,10 +45,10 @@ angular.module('starter', [ 'ionic', 'ionic-datepicker', 'starter.controllers', 
 	});
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+	$httpProvider.defaults.withCredentials = true;
+	
 	$stateProvider
-
 	.state('tab', {
 		url : '/tab',
 		abstract : true,
