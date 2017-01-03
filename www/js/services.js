@@ -466,7 +466,7 @@ angular.module('starter.services', [])
 			console.log(train);
 			console.log(data);
 			var order = {
-				transactionNum : train.train,
+				transactionNum : train.transactionNum,
 				trainCode : train.trainCode,
 				trainId : train.trainId,
 				travelDate : train.travelDate,
@@ -474,8 +474,8 @@ angular.module('starter.services', [])
 				arrivalTime : train.arrivalTime,
 				boardStationName : train.boardStationName,
 				arrivalStationName : train.arrivalStationName,
-				printTicketNo : train.printTicketNo,
-				ticketNum : train.ticketNum,
+				printTicketNo : data.tempStubs.printTicketNo,
+				ticketNum : data.tempStubs.ticketNum,
 				id : (function() {
 					var time = new Date(train.boardTime);// getMinutes()
 					return new Date(train.travelDate).setHours(time.getHours(), time.getMinutes(), time.getSeconds(), 0);

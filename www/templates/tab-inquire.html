@@ -1,5 +1,17 @@
 <ion-view view-title="Inquire">
   <ion-content>
-  	<h2>Inquire</h2>
+  	
+	<ul class="list" data-ng-repeat="order in orders track by $index" style="border:1px solid #000;">
+		<li class="item">TRAINCODE: {{order.trainCode}}</li>
+		<li class="item">NO.: {{order.transactionNum}}</li>
+		<li class="item">BOARD DATE:  {{order.travelDate | date : 'yyyy-MM-dd'}}</li>
+		<li class="item">BOARD TIME:  {{order.boardTime | date : 'HH:mm:ss'}}</li>
+		<li class="item">DEP: {{order.boardStationName}}</li>
+		<li class="item">ARR: {{order.arrivalStationName}}</li>
+	</ul>
+	  	
+	  	
+	  	
+	
   </ion-content>
 </ion-view>

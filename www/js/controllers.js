@@ -236,6 +236,12 @@ angular.module('starter.controllers', [])
 	console.log('PARAMS', $location.search());
 
 }).controller('InquireController', function($scope) {
+	var orderstr = window.localStorage.getItem('orders');
+	$scope.orders = [];
+	if (orderstr != ''){
+		$scope.orders = JSON.parse(orderstr);
+	}
+	
 }).controller('AccountController', function($scope, CommonService) {
 	this.login = function() {
 		console.log('trige login');

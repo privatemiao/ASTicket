@@ -24,7 +24,7 @@ angular.module('starter', [ 'ionic', 'ionic-datepicker', 'starter.controllers', 
 		}
 
 		if (!window.variables.server) {
-			window.variables.server = '127.0.0.1';
+			window.variables.server = '10.100.103.10';
 		}
 		// {"sessionId":null,"serviceName":null,"channelCode":null,
 		// "ticketStationCode":"SBT",
@@ -86,6 +86,6 @@ angular.module('starter', [ 'ionic', 'ionic-datepicker', 'starter.controllers', 
 		}
 	});
 
-	$urlRouterProvider.otherwise('/tab/inquire');
+	$urlRouterProvider.otherwise('/tab/booking');
 
 });
