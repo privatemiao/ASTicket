@@ -18,29 +18,6 @@ angular.module('starter', [ 'ionic', 'ionic-datepicker', 'starter.controllers', 
 			StatusBar.styleDefault();
 		}
 
-		// WINDOW.VARIABLES
-		if (!window.variables) {
-			window.variables = {};
-		}
-
-		if (!window.variables.server) {
-			window.variables.server = '10.100.103.10';
-		}
-		// {"sessionId":null,"serviceName":null,"channelCode":null,
-		// "ticketStationCode":"SBT",
-		// "officeNo":"SBT01",
-		// "windowNo":"102","operatorNo":null,"shiftCode":null,"innerCode":null,"belongStationCode":null,"money":null,"runMode":null,"ipAddress":null,"systemCode":null,"deviceIdentity":null,"licenceCode":null,"applyCode":null,"agentRepeater":null,"encryptFlag":false,"windowTicketNo":null,"systemTime":null}
-
-		if (!window.variables.postInfo) {
-			window.variables.postInfo = {
-				"ticketStationCode" : "SBT",
-				"officeNo" : "SBT01",
-				"windowNo" : "102",
-				innerCode : '000'
-			};
-		}
-
-		console.log('window.variables', window.variables);
 	});
 })
 

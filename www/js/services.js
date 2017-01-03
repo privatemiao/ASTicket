@@ -1,6 +1,15 @@
 angular.module('starter.services', [])
 
 .factory('CommonService', function($http, $q) {
+	// WINDOW.VARIABLES
+	if (!window.variables) {
+		window.variables = {};
+	}
+
+	if (!window.variables.server) {
+		window.variables.server = '127.0.0.1';
+	}
+	
 	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
 	var variables = {
 		dict : {},
