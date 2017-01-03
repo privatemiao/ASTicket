@@ -235,39 +235,27 @@ angular.module('starter.controllers', [])
 }).controller("TrainListController", function($location) {
 	console.log('PARAMS', $location.search());
 
-}).controller('InquireController', function($scope) {
-	var orderstr = window.localStorage.getItem('orders');
-	$scope.orders = [];
-	if (orderstr != ''){
-		$scope.orders = JSON.parse(orderstr);
+}).controller('InquireController', function($scope, $rootScope) {
+	function init(){
+		console.log('~~~~~~~~~~~~~~');
+		var orderstr = window.localStorage.getItem('orders');
+		$scope.orders = [];
+		if (orderstr != ''){
+			$scope.orders = JSON.parse(orderstr);
+		}
 	}
 	
+	init();
+	
+	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+		if(toState.name === 'tab.inquire'){
+			init();
+		}
+	});
+	
 }).controller('AccountController', function($scope, CommonService) {
-	this.login = function() {
-		console.log('trige login');
-		CommonService.login();
+	this.clearOrders = function(){
+		window.localStorage.setItem('orders', '');
 	};
-
-	this.getDeparture = function() {
-		console.log('trige departure');
-		CommonService.getDeparture();
-	};
-
-	this.getArrived = function() {
-		console.log('trige arrived');
-		CommonService.getArrived();
-	};
-
-	this.queryTrain = function() {
-		console.log('trige queryTrain');
-		CommonService.queryTrain();
-	};
-	this.queryPrice = function() {
-		console.log('trige queryPrice');
-		CommonService.queryTrainPrice();
-	};
-	this.getTickets = function() {
-		CommonService.getTickets();
-	}
 
 })

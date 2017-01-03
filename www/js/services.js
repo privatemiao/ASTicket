@@ -7,7 +7,7 @@ angular.module('starter.services', [])
 	}
 
 	if (!window.variables.server) {
-		window.variables.server = '127.0.0.1';
+		window.variables.server = '10.100.103.10';
 	}
 	
 	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
@@ -334,6 +334,7 @@ angular.module('starter.services', [])
 			console.log('CommonService.getTickets', obj);
 			var defer = $q.defer();
 			var reference = this;
+			console.log('DepartureDate ', new Date(obj.departureDate.getTime()).setHours(0, 0, 0, 0));
 			var data = {
 				// "sessionId" : null,
 				// "serviceName" : null,
