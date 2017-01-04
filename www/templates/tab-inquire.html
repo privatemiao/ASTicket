@@ -2,7 +2,7 @@
   <ion-content>
   	
 	<ul class="list" data-ng-repeat="order in orders track by $index" style="border:1px solid #000;">
-		<li class="item">TRAINCODE: {{order.trainCode}}</li>
+		<li class="item">TRAINCODE: {{order.trainCode}}<span class="badge badge-dark">{{$index  + 1}}.</span></li>
 		<li class="item">NO.: {{order.transactionNum}}</li>
 		<li class="item">BOARD DATE:  {{order.travelDate | date : 'yyyy-MM-dd'}}</li>
 		<li class="item">BOARD TIME:  {{order.boardTime | date : 'HH:mm:ss'}}</li>
