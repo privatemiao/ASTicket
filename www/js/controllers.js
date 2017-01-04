@@ -21,15 +21,15 @@ angular.module('starter.controllers', [])
 		animation : 'slide-in-up'
 	}).then(function(modal) {
 		$scope.loginModal = modal;
-		if(!window.login){
-			$scope.loginModal.show();
-		}
+		// if(!window.login){
+		// $scope.loginModal.show();
+		// }
 	});
 
 	this.login = function() {
 		CommonService.login();
 		$scope.loginModal.hide();
-		window.isLogin = true;
+		window.login = true;
 	};
 
 	$ionicModal.fromTemplateUrl('modal-loading.html', {
@@ -60,9 +60,16 @@ angular.module('starter.controllers', [])
 	};
 
 	this.confirm = function() {
+		if (!window.login) {
+			$scope.loginModal.show();
+			return;
+		}
+
 		CommonService.buyTickets({
 			order : $scope.order,
 			departureDate : $scope.departureDate
+		}).then(function(){
+			$scope.orderModal.hide();
 		});
 	};
 
@@ -236,26 +243,32 @@ angular.module('starter.controllers', [])
 	console.log('PARAMS', $location.search());
 
 }).controller('InquireController', function($scope, $rootScope) {
-	function init(){
+	function init() {
 		console.log('~~~~~~~~~~~~~~');
 		var orderstr = window.localStorage.getItem('orders');
 		$scope.orders = [];
-		if (orderstr != ''){
+		if (orderstr != '') {
 			$scope.orders = JSON.parse(orderstr);
 		}
 	}
-	
+
 	init();
-	
-	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-		if(toState.name === 'tab.inquire'){
+
+	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+		if (toState.name === 'tab.inquire') {
 			init();
 		}
 	});
-	
+
 }).controller('AccountController', function($scope, CommonService) {
-	this.clearOrders = function(){
+
+	this.clearOrders = function() {
 		window.localStorage.setItem('orders', '');
 	};
 
+	$scope.server = window.variables.server;
+
+//	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+//
+//	});
 })

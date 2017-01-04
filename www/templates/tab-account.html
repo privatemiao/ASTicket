@@ -1,5 +1,15 @@
 <ion-view view-title="Account">
   <ion-content>
-  	<button class="button button-block button-assertive" data-ng-click="accountController.clearOrders()">ClearData</button>
+  	<ul class="list">
+  		<li class="item">
+		  	<button class="button button-block button-assertive" data-ng-click="accountController.clearOrders()">ClearData</button>
+  		</li>
+  		<li class="item">
+			<label class="item item-input">
+				<span class="input-label">SERVER IP</span>
+				<input type="text" data-ng-model="server">
+			</label>
+  		</li>
+  	</ul>
   </ion-content>
 </ion-view>

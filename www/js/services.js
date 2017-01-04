@@ -7,7 +7,7 @@ angular.module('starter.services', [])
 	}
 
 	if (!window.variables.server) {
-		window.variables.server = '10.100.103.10';
+		window.variables.server = '127.0.0.1';
 	}
 	
 	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
@@ -250,6 +250,12 @@ angular.module('starter.services', [])
 
 			console.log('CommonService query train ', obj);
 			$http.post(variables.URLs.queryTrain, obj.data).then(function(response) {
+				if (!response.data || !response.data.success){
+					if (response.data){
+						alert(response.data.message);
+					}
+					return;
+				}
 				if (obj.callback) {
 					obj.callback(response);
 				}
@@ -507,17 +513,22 @@ angular.module('starter.services', [])
 		},
 		buyTickets : function(obj) {
 			var reference = this;
+			var defer = $q.defer();
 			var i = 0;
 			(function _callGetTicket() {
 				reference.getTickets(obj).then(function(response) {
 					if (++i < obj.order.quantity) {
 						_callGetTicket();
+					}else{
+						defer.resolve();
 					}
 				}, function(response) {
 					console.log('ERROR', response);
+					alert(response);
+					defer.deject(response);
 				});
 			})();
-			// this.getTickets(obj);
+			return defer.promise;
 		}
 	};
 });
