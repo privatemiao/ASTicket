@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('BookingController', function($scope, $ionicModal, CommonService, ionicDatePicker, $location) {
+.controller('BookingController', function($scope, $rootScope, $ionicModal, CommonService, ionicDatePicker, $location) {
 	var reference = this, MODAL_TITLE_DEPARTURE = 'Departure Station', MODAL_TITLE_ARRIVED = 'Arrived Station';
 	$scope.departureDate = new Date();
 	$scope.selectedTicketTypes = [];
@@ -68,7 +68,7 @@ angular.module('starter.controllers', [])
 		CommonService.buyTickets({
 			order : $scope.order,
 			departureDate : $scope.departureDate
-		}).then(function(){
+		}).then(function() {
 			$scope.orderModal.hide();
 		});
 	};
@@ -83,24 +83,37 @@ angular.module('starter.controllers', [])
 		});
 	};
 
-	CommonService.loadData(function() {
-		$scope.stations = CommonService.getStations();
-		$scope.ticketTypes = CommonService.getTicketTypes();
-		$scope.seatTypes = CommonService.getSeatTypes();
-		$scope.departureStation = $scope.stations[0];
-		$scope.arrivedStation = $scope.stations[$scope.stations.length - 1];
-		$scope.loadingModal.hide();
-		reference.showStations = function(title) {
-			console.log('ShowDepartureStations');
-			$scope.modalStationTitle = title;
-			$scope.openModal();
-		};
+	function init() {
+		console.log('init data');
+		CommonService.loadData(function() {
+			$scope.stations = CommonService.getStations();
+			$scope.ticketTypes = CommonService.getTicketTypes();
+			$scope.seatTypes = CommonService.getSeatTypes();
+			$scope.departureStation = $scope.stations[0];
+			$scope.arrivedStation = $scope.stations[$scope.stations.length - 1];
+			$scope.loadingModal.hide();
+			reference.showStations = function(title) {
+				console.log('ShowDepartureStations');
+				$scope.modalStationTitle = title;
+				$scope.openModal();
+			};
 
-		reference.exchangeStation = function() {
-			var tmp = $scope.departureStation;
-			$scope.departureStation = $scope.arrivedStation;
-			$scope.arrivedStation = tmp;
-		};
+			reference.exchangeStation = function() {
+				var tmp = $scope.departureStation;
+				$scope.departureStation = $scope.arrivedStation;
+				$scope.arrivedStation = tmp;
+			};
+		});
+	}
+
+	init();
+
+	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+		if (toState.name === 'tab.booking') {
+			if (!$scope.stations) {
+				init();
+			}
+		}
 	});
 
 	this.selectStation = function(station) {
@@ -260,15 +273,19 @@ angular.module('starter.controllers', [])
 		}
 	});
 
-}).controller('AccountController', function($scope, CommonService) {
-
+}).controller('AccountController', function($scope, $rootScope, CommonService) {
+	$scope.variables = {
+		server : window.variables.server
+	};
 	this.clearOrders = function() {
 		window.localStorage.setItem('orders', '');
+		console.log('server', $scope.variables.server);
 	};
 
-	$scope.server = window.variables.server;
-
-//	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-//
-//	});
+	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+		console.log('fromstate', fromState);
+		if (fromState.name === 'tab.account') {
+			window.variables.server = $scope.variables.server;
+		}
+	});
 })

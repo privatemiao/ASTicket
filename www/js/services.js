@@ -9,7 +9,7 @@ angular.module('starter.services', [])
 	if (!window.variables.server) {
 		window.variables.server = '127.0.0.1';
 	}
-	
+
 	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
 	var variables = {
 		dict : {},
@@ -41,8 +41,23 @@ angular.module('starter.services', [])
 				console.error(response);
 			});
 		},
+		resetURL : function() {
+			variables.URLs = {
+				health : 'http://' + window.variables.server + '/core-main/health',
+				getNextRollerNo : 'http://' + window.variables.server + "/core-main/api/v1/transaction/post/volume/sysqueryticketno",
+				dict : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/sysNormalMor',
+				login : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/auth/syswindowlogin',
+				getDeparture : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetboardstation',
+				getArrived : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysgetarivstation',
+				queryTrain : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/traininfo/sysfdzquery',
+				getTickets : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/transaction/sysseatapply',
+				buyTicket : 'http://' + window.variables.server + '/core-main/api/v1/transaction/post/transaction/sysrecordsalestub'
+			};
+		},
 		loadData : function(callback) {
 			console.log('<LoadStation>');
+			
+			this.resetURL();
 
 			if (window.localStorage.obj) {
 				variables.obj = JSON.parse(window.localStorage.obj);
@@ -250,8 +265,8 @@ angular.module('starter.services', [])
 
 			console.log('CommonService query train ', obj);
 			$http.post(variables.URLs.queryTrain, obj.data).then(function(response) {
-				if (!response.data || !response.data.success){
-					if (response.data){
+				if (!response.data || !response.data.success) {
+					if (response.data) {
 						alert(response.data.message);
 					}
 					return;
@@ -502,7 +517,7 @@ angular.module('starter.services', [])
 			console.log('From Storage ', orders);
 			if (!orders) {
 				orders = [];
-			}else{
+			} else {
 				orders = JSON.parse(orders);
 			}
 			orders.push(order);
@@ -519,7 +534,7 @@ angular.module('starter.services', [])
 				reference.getTickets(obj).then(function(response) {
 					if (++i < obj.order.quantity) {
 						_callGetTicket();
-					}else{
+					} else {
 						defer.resolve();
 					}
 				}, function(response) {
