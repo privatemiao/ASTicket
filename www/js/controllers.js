@@ -286,6 +286,7 @@ angular.module('starter.controllers', [])
 		console.log('fromstate', fromState);
 		if (fromState.name === 'tab.account') {
 			window.variables.server = $scope.variables.server;
+			window.localStorage.setItem('server', $scope.variables.server);
 		}
 	});
 })

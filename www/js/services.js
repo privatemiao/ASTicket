@@ -7,7 +7,12 @@ angular.module('starter.services', [])
 	}
 
 	if (!window.variables.server) {
-		window.variables.server = '127.0.0.1';
+		var _server = window.localStorage.getItem('server');
+		if (_server){
+			window.variables.server = _server;
+		}else{
+			window.variables.server = '127.0.0.1';
+		}
 	}
 
 	$http.defaults.headers.common['Authorization'] = 'Basic c2J0czAxOmFkbWlu';
