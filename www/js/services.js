@@ -1,6 +1,6 @@
-angular.module('starter.services', [])
+angular.module('starter.services', [ 'ionic' ])
 
-.factory('CommonService', function($http, $q) {
+.factory('CommonService', function($http, $q, $ionicLoading) {
 	// WINDOW.VARIABLES
 	if (!window.variables) {
 		window.variables = {};
@@ -8,9 +8,9 @@ angular.module('starter.services', [])
 
 	if (!window.variables.server) {
 		var _server = window.localStorage.getItem('server');
-		if (_server){
+		if (_server) {
 			window.variables.server = _server;
-		}else{
+		} else {
 			window.variables.server = '127.0.0.1';
 		}
 	}
@@ -61,7 +61,7 @@ angular.module('starter.services', [])
 		},
 		loadData : function(callback) {
 			console.log('<LoadStation>');
-			
+
 			this.resetURL();
 
 			if (window.localStorage.obj) {
@@ -545,10 +545,23 @@ angular.module('starter.services', [])
 				}, function(response) {
 					console.log('ERROR', response);
 					alert(response);
-					defer.deject(response);
+					defer.reject(response);
 				});
 			})();
 			return defer.promise;
+		},
+		showProcess : function(obj) {
+			$ionicLoading.show({
+				template : obj.title,
+				duration : obj.time
+			}).then(function() {
+				console.log("The loading indicator is now displayed");
+			});
+		},
+		hideProcess : function() {
+			$ionicLoading.hide().then(function() {
+				console.log("The loading indicator is now hidden");
+			});
 		}
 	};
 });

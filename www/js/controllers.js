@@ -65,11 +65,18 @@ angular.module('starter.controllers', [])
 			return;
 		}
 
+		CommonService.showProcess({
+			title : 'wait....',
+			time : 0
+		});
 		CommonService.buyTickets({
 			order : $scope.order,
 			departureDate : $scope.departureDate
 		}).then(function() {
 			$scope.orderModal.hide();
+			CommonService.hideProcess();
+		}, function() {
+			CommonService.hideProcess();
 		});
 	};
 
@@ -289,4 +296,5 @@ angular.module('starter.controllers', [])
 			window.localStorage.setItem('server', $scope.variables.server);
 		}
 	});
+
 })
