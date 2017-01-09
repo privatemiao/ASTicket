@@ -11,7 +11,7 @@ angular.module('starter.services', [ 'ionic' ])
 		if (_server) {
 			window.variables.server = _server;
 		} else {
-			window.variables.server = '127.0.0.1';
+			window.variables.server = '10.100.103.10';
 		}
 	}
 

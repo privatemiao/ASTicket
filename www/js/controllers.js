@@ -264,7 +264,6 @@ angular.module('starter.controllers', [])
 
 }).controller('InquireController', function($scope, $rootScope) {
 	function init() {
-		console.log('~~~~~~~~~~~~~~');
 		var orderstr = window.localStorage.getItem('orders');
 		$scope.orders = [];
 		if (orderstr != '') {
