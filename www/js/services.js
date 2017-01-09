@@ -318,37 +318,19 @@ angular.module('starter.services', [ 'ionic' ])
 		translateTrainInfo : function(trainInfo) {
 			var seatInfos = trainInfo.seatInfo;
 			var avaliableSeats = 0;
-			// var css = '';
 			for (var i = 0; i < seatInfos.length; i++) {
 				seatInfos[i].seatTypeNameEn = variables.index.seatType[seatInfos[i].seatType].seatTypeEn;
 				avaliableSeats += seatInfos[i].seatAvaliableCount;
-				// if (css.length === 0){
-				// css += 'seat-type-'+seatInfos[i].seatType
-				// }else{
-				// css += ' seat-type-'+seatInfos[i].seatType
-				// }
 			}
 			seatInfos.avaliableSeats = avaliableSeats;
-			// seatInfos.css = css;
 
 		},
 		queryTrainPrice : function() {
-			/*
-			 * String trainCode = request.getTrainCode(); Date businessDate =
-			 * request.getBusinessDate(); String stationCode =
-			 * request.getBelongStationCode();
-			 */
 			var data = {
 				trainCode : 'G1214',
 				businessDate : new Date(),
 				belongStationCode : 'SBT'
 			};
-			// $http.post('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice',
-			// JSON.stringify(data)).then(function(response) {
-			// console.log(response);
-			// }, function(response) {
-			// console.error(response);
-			// });
 
 			$http.get('http://127.0.0.1/core-main/api/v1/transaction/post/transaction/sysqueryprice/G1214/SBT').then(function(response) {
 				console.log(response);
@@ -362,25 +344,12 @@ angular.module('starter.services', [ 'ionic' ])
 			var reference = this;
 			console.log('DepartureDate ', new Date(obj.departureDate.getTime()).setHours(0, 0, 0, 0));
 			var data = {
-				// "sessionId" : null,
-				// "serviceName" : null,
 				"channelCode" : "1",
-				// "ticketStationCode" : "SBT",
 				"officeNo" : "SBT01",
 				"windowNo" : "102",
 				"operatorNo" : "sbts01",
 				"shiftCode" : "A",
 				"innerCode" : "SBT01",
-				// "belongStationCode" : "SBT",
-				// "money" : null,
-				// "runMode" : null,
-				// "ipAddress" : "192.168.94.2",
-				// "systemCode" : null,
-				// "deviceIdentity" : null,
-				// "licenceCode" : null,
-				// "applyCode" : null,
-				// "agentRepeater" : null,
-				// "encryptFlag" : false,
 				"applyType" : "1",
 				"bookDate" : new Date().getTime(),
 				"transactionType" : "1",
@@ -395,7 +364,6 @@ angular.module('starter.services', [ 'ionic' ])
 				"trainClassCode" : obj.order.trainDirDay.trainClass.trainClassCode,
 				"boardStationCode" : obj.order.boardStation.station.stationCode,
 				"boardStationName" : obj.order.boardStation.station.stationNameEn,
-				// "boardStationSeq" : 2,
 				"boardTime" : obj.order.boardStation.boardTime,
 				"arrivalStationCode" : obj.order.arrivalStation.station.stationCode,
 				"arrivalStationSeq" : obj.order.arrivalStation.stationNo,
@@ -409,11 +377,6 @@ angular.module('starter.services', [ 'ionic' ])
 				} ],
 				"seatFlag" : obj.order.seat.seatFlag,
 				"purposeCode" : "A1"
-			// ,"coachNo" : "",
-			// "seatNo" : "",
-			// "bedLevel" : "",
-			// "differentDay" : "0",
-			// "distance" : 777.0
 			};
 
 			$http.post(variables.URLs.getTickets, data).then(function(response) {

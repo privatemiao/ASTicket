@@ -21,9 +21,6 @@ angular.module('starter.controllers', [])
 		animation : 'slide-in-up'
 	}).then(function(modal) {
 		$scope.loginModal = modal;
-		// if(!window.login){
-		// $scope.loginModal.show();
-		// }
 	});
 
 	this.login = function() {
