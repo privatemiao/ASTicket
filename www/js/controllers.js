@@ -62,10 +62,22 @@ angular.module('starter.controllers', [])
 			return;
 		}
 
+		
+		if (!$scope.order.seat){
+			alert('Please choice seat.');
+			return;
+		}
+		
+		if (isNaN($scope.order.quantity)){
+			alert('Please input quantity.');
+			return;
+		}
+		
 		CommonService.showProcess({
 			title : 'wait....',
 			time : 0
 		});
+		
 		CommonService.buyTickets({
 			order : $scope.order,
 			departureDate : $scope.departureDate
