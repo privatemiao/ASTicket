@@ -272,7 +272,9 @@ angular.module('starter.services', [ 'ionic' ])
 			$http.post(variables.URLs.queryTrain, obj.data).then(function(response) {
 				if (!response.data || !response.data.success) {
 					if (response.data) {
-						alert(response.data.message);
+						if (response.data.message === 'B1001'){
+							alert('Not train found.');
+						}
 					}
 					return;
 				}
