@@ -175,7 +175,15 @@ angular.module('starter.controllers', [])
 				"purposeCode" : "A1"
 			},
 			callback : function(response) {
-				console.log('Query train ', response);
+				if (!response.data || !response.data.success) {
+					if (response.data) {
+						if (response.data.message === 'B1001') {
+							alert('Not train found.');
+						}
+					}
+					return;
+				}
+
 				var trainList = [];
 				if (response && response.data && response.data.success) {
 					for (var i = 0; i < response.data.trainInfo.length; i++) {

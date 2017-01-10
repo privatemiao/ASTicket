@@ -270,14 +270,6 @@ angular.module('starter.services', [ 'ionic' ])
 
 			console.log('CommonService query train ', obj);
 			$http.post(variables.URLs.queryTrain, obj.data).then(function(response) {
-				if (!response.data || !response.data.success) {
-					if (response.data) {
-						if (response.data.message === 'B1001'){
-							alert('Not train found.');
-						}
-					}
-					return;
-				}
 				if (obj.callback) {
 					obj.callback(response);
 				}
