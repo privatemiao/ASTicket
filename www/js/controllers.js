@@ -73,6 +73,12 @@ angular.module('starter.controllers', [])
 			return;
 		}
 		
+		var q = parseInt($scope.order.quantity);
+		if (q > 10 || q < 1){
+			alert('Quantity (1 ~ 10).');
+			return;
+		}
+		
 		CommonService.showProcess({
 			title : 'wait....',
 			time : 0
