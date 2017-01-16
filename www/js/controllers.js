@@ -56,35 +56,44 @@ angular.module('starter.controllers', [])
 		$scope.orderModal.show();
 	};
 
+	this.checkConfirmState = function() {
+		if (!$scope.order.seat) {
+			return false;
+		}
+
+		if (isNaN($scope.order.quantity)) {
+			return false;
+		}
+		
+		return true;
+	};
 	this.confirm = function() {
 		if (!window.login) {
 			$scope.loginModal.show();
 			return;
 		}
 
-		
-		console.log('seat', $scope.order.seat);
-		if (!$scope.order.seat){
+		if (!$scope.order.seat) {
 			alert('Please choice seat.');
 			return;
 		}
-		
-		if (isNaN($scope.order.quantity)){
+
+		if (isNaN($scope.order.quantity)) {
 			alert('Please input quantity.');
 			return;
 		}
-		
+
 		var q = parseInt($scope.order.quantity);
-		if (q > 10 || q < 1){
+		if (q > 10 || q < 1) {
 			alert('Quantity (1 ~ 10).');
 			return;
 		}
-		
+
 		CommonService.showProcess({
 			title : 'wait....',
 			time : 0
 		});
-		
+
 		CommonService.buyTickets({
 			order : $scope.order,
 			departureDate : $scope.departureDate

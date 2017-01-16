@@ -90,7 +90,7 @@
     			<input type="text" data-ng-model="order.quantity" />
   			</label>
 			<li class="item">
-				<button class="button button-block button-assertive" data-ng-click="bookingController.confirm()">Confirm</button>
+				<button class="button button-block button-assertive" data-ng-click="bookingController.confirm()" data-ng-disabled="!bookingController.checkConfirmState()">Confirm</button>
 				<button class="button button-block button-dark" data-ng-click="orderModal.hide()">Cancel</button>
 			</li>
 		</ul>
