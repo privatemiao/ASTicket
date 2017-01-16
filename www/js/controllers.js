@@ -63,6 +63,7 @@ angular.module('starter.controllers', [])
 		}
 
 		
+		console.log('seat', $scope.order.seat);
 		if (!$scope.order.seat){
 			alert('Please choice seat.');
 			return;
