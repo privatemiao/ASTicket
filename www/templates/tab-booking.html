@@ -10,6 +10,45 @@
 <ion-view view-title="Booking">
 <ion-content>
 
+	<ul class="list">
+		<li class="item" style="text-align: center;">
+			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Departure Station')">{{departureStation.stationNameEn}}</button>
+			<button class="button button-clear button-positive" style="color:#000;" data-ng-click="bookingController.exchangeStation()"><i class="ion-arrow-swap"></i></button>
+			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Arrived Station')">{{arrivedStation.stationNameEn}}</button>
+		</li>
+		<label class="item item-input">
+			<span class="input-label"  style="width:50px;">DATE</span>
+			<button class="button button-clear button-positive" data-ng-click="bookingController.openDepartureDatePicker()">{{departureDate | date:'yyyy-MM-dd'}}</button>
+		</label>
+		<label class="item item-input">
+			<span class="input-label" style="width:50px;">TYPE</span>
+			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-click="bookingController.seatTypeTrigged()" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
+		</label>
+		<li class="item">
+			<button class="button button-block button-calm" data-ng-click="bookingController.query()">Query</button>
+		</li>
+	</ul>
+
+	<div class="list">
+		<div class="item">
+			<div class="row">
+		  		<div class="col header">TRAIN</div>
+		  		<div class="col header">DEP</div>
+		  		<div class="col header">ARR</div>
+		  		<div class="col header">SEATS</div>
+		  	</div>
+		</div>
+		<a data-ng-hide="train.visible == false" href="" class="item" data-ng-click="bookingController.popOrder(train)" data-ng-repeat="train in trainList track by train.trainDirDay.id">
+		  	<div class="row {{train.seatInfo.css}}">
+				<div class="col" class="train-code">{{train.trainDirDay.trainCode}}</div>
+				<div class="col">{{train.boardStation.station.stationNameEn}}</div>
+				<div class="col">{{train.arrivalStation.station.stationNameEn}}</div>
+				<div class="col">{{train.seatInfo.avaliableSeats}}</div>
+		  	</div>
+		</a>
+	</div>
+</ion-content>
+</ion-view>
 <script id="modal-login.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar>
@@ -97,43 +136,3 @@
     </ion-content>
   </ion-modal-view>
 </script>
-
-	<ul class="list">
-		<li class="item" style="text-align: center;">
-			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Departure Station')">{{departureStation.stationNameEn}}</button>
-			<button class="button button-clear button-positive" style="color:#000;" data-ng-click="bookingController.exchangeStation()"><i class="ion-arrow-swap"></i></button>
-			<button class="button button-clear button-positive" data-ng-click="bookingController.showStations('Arrived Station')">{{arrivedStation.stationNameEn}}</button>
-		</li>
-		<label class="item item-input">
-			<span class="input-label"  style="width:50px;">DATE</span>
-			<button class="button button-clear button-positive" data-ng-click="bookingController.openDepartureDatePicker()">{{departureDate | date:'yyyy-MM-dd'}}</button>
-		</label>
-		<label class="item item-input">
-			<span class="input-label" style="width:50px;">TYPE</span>
-			<ion-checkbox style="padding:50px 10px 0 0; border: 0;" data-ng-repeat="type in seatTypes track by type.seatTypeCode" data-ng-click="bookingController.seatTypeTrigged()" data-ng-model="selectedSeatTypes[$index]">{{type.seatTypeEn}}</ion-checkbox>
-		</label>
-		<li class="item">
-			<button class="button button-block button-calm" data-ng-click="bookingController.query()">Query</button>
-		</li>
-	</ul>
-
-	<div class="list">
-		<div class="item">
-			<div class="row">
-		  		<div class="col header">TRAIN</div>
-		  		<div class="col header">DEP</div>
-		  		<div class="col header">ARR</div>
-		  		<div class="col header">SEATS</div>
-		  	</div>
-		</div>
-		<a data-ng-hide="train.visible == false" href="" class="item" data-ng-click="bookingController.popOrder(train)" data-ng-repeat="train in trainList track by train.trainDirDay.id">
-		  	<div class="row {{train.seatInfo.css}}">
-				<div class="col" class="train-code">{{train.trainDirDay.trainCode}}</div>
-				<div class="col">{{train.boardStation.station.stationNameEn}}</div>
-				<div class="col">{{train.arrivalStation.station.stationNameEn}}</div>
-				<div class="col">{{train.seatInfo.avaliableSeats}}</div>
-		  	</div>
-		</a>
-	</div>
-</ion-content>
-</ion-view>
